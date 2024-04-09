@@ -114,7 +114,11 @@ public class SpellsLogic : MonoBehaviour
         }
         if (spell == "Dominate Person")
         {
-            Debug.Log(spell);
+            arrow0.gameObject.transform.rotation = down;
+            arrow1.gameObject.transform.rotation = up;
+            arrow2.gameObject.transform.rotation = left;
+            arrow3.gameObject.transform.rotation = left;
+            arrow3.gameObject.transform.rotation = right;
         }
     }
 
@@ -166,6 +170,34 @@ public class SpellsLogic : MonoBehaviour
                 place += 1;
             }
             else if (Input.GetKeyDown("a") && place == 3)
+            {
+                arrow3.color = entered;
+                place += 1;
+            }
+        }
+        if (spell == "Dominate Person")
+        {
+            if (Input.GetKeyDown("s") && place == 0)
+            {
+                arrow0.color = entered;
+                place += 1;
+            }
+            else if (Input.GetKeyDown("w") && place == 1)
+            {
+                arrow1.color = entered;
+                place += 1;
+            }
+            else if (Input.GetKeyDown("a") && place == 2)
+            {
+                arrow2.color = entered;
+                place += 1;
+            }
+            else if (Input.GetKeyDown("a") && place == 3)
+            {
+                arrow3.color = entered;
+                place += 1;
+            }
+            else if (Input.GetKeyDown("d") && place == 4)
             {
                 arrow3.color = entered;
                 place += 1;
