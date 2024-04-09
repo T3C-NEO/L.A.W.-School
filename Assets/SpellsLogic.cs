@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SpellsLogic : MonoBehaviour
 {
+    public TextMeshProUGUI spellName;
 
     public SpriteRenderer arrow0;
     public SpriteRenderer arrow1;
@@ -23,14 +25,16 @@ public class SpellsLogic : MonoBehaviour
     Color clear = new Color(1, 1, 1, 1);
 
     //creating where the positions are depending on how many arrows there are
-    public List<Vector2> threePos = new List<Vector2>();
     public List<Vector2> fourPos = new List<Vector2>();
-    public List<Vector2> fivePos = new List<Vector2>();
+    public List<Vector2> threefivePos = new List<Vector2>();
     public List<Vector2> sixPos = new List<Vector2>();
 
     public List<string> spellList = new List<string>();
 
     string spell;
+
+    //to see if you've finished the spell
+    bool done = true;
 
 
     // Start is called before the first frame update
@@ -43,12 +47,13 @@ public class SpellsLogic : MonoBehaviour
         fourPos.Add(new Vector2(4.5f, 0));
 
         //positions for a spell with five commands
-        fivePos.Add(new Vector2(-6, 0));
-        fivePos.Add(new Vector2(-3, 0));
-        fivePos.Add(new Vector2(0, 0));
-        fivePos.Add(new Vector2(3, 0));
-        fivePos.Add(new Vector2(6, 0));
+        threefivePos.Add(new Vector2(-6, 0));
+        threefivePos.Add(new Vector2(-3, 0));
+        threefivePos.Add(new Vector2(0, 0));
+        threefivePos.Add(new Vector2(3, 0));
+        threefivePos.Add(new Vector2(6, 0));
 
+        spellList.Add("Detect Magic");
         spellList.Add("Presto");
         spellList.Add("Shocking Grasp");
         spellList.Add("Dominate Person");
@@ -62,6 +67,8 @@ public class SpellsLogic : MonoBehaviour
         place = 0;
         int i = Random.Range(0, spellList.Count);
 
+        spellName.text = spellList[i];
+
         arrow0.color = clear;
         arrow1.color = clear;
         arrow2.color = clear;
@@ -70,6 +77,18 @@ public class SpellsLogic : MonoBehaviour
         arrow5.color = clear;
 
         spell = spellList[i];
+        if (spell == "Detect Magic")
+        {
+            arrow0.gameObject.SetActive(true);
+            arrow1.gameObject.SetActive(true);
+            arrow2.gameObject.SetActive(true);
+            arrow3.gameObject.SetActive(false);
+            arrow4.gameObject.SetActive(false);
+            arrow5.gameObject.SetActive(false);
+            arrow0.gameObject.transform.position = threefivePos[1];
+            arrow1.gameObject.transform.position = threefivePos[2];
+            arrow2.gameObject.transform.position = threefivePos[3];
+        }
         if (spell == "Presto" || spell == "Shocking Grasp")
         {
             arrow0.gameObject.SetActive(true);
@@ -91,11 +110,18 @@ public class SpellsLogic : MonoBehaviour
             arrow3.gameObject.SetActive(true);
             arrow4.gameObject.SetActive(true);
             arrow5.gameObject.SetActive(false);
-            arrow0.gameObject.transform.position = fivePos[0];
-            arrow1.gameObject.transform.position = fivePos[1];
-            arrow2.gameObject.transform.position = fivePos[2];
-            arrow3.gameObject.transform.position = fivePos[3];
-            arrow4.gameObject.transform.position = fivePos[4];
+            arrow0.gameObject.transform.position = threefivePos[0];
+            arrow1.gameObject.transform.position = threefivePos[1];
+            arrow2.gameObject.transform.position = threefivePos[2];
+            arrow3.gameObject.transform.position = threefivePos[3];
+            arrow4.gameObject.transform.position = threefivePos[4];
+        }
+
+        if (spell == "Detect Magic")
+        {
+            arrow0.gameObject.transform.rotation = down;
+            arrow1.gameObject.transform.rotation = up;
+            arrow2.gameObject.transform.rotation = down;
         }
 
         if (spell == "Presto")
@@ -118,16 +144,37 @@ public class SpellsLogic : MonoBehaviour
             arrow1.gameObject.transform.rotation = up;
             arrow2.gameObject.transform.rotation = left;
             arrow3.gameObject.transform.rotation = left;
-            arrow3.gameObject.transform.rotation = right;
+            arrow4.gameObject.transform.rotation = right;
         }
+
+        done = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (done == true)
         {
             rollSpell();
+        }
+        if (spell == "Detect Magic")
+        {
+            if (Input.GetKeyDown("s") && place == 0)
+            {
+                arrow0.color = entered;
+                place += 1;
+            }
+            else if (Input.GetKeyDown("w") && place == 1)
+            {
+                arrow1.color = entered;
+                place += 1;
+            }
+            else if (Input.GetKeyDown("s") && place == 2)
+            {
+                arrow2.color = entered;
+                place += 1;
+                done = true;
+            }
         }
         if (spell == "Presto")
         {
@@ -150,6 +197,8 @@ public class SpellsLogic : MonoBehaviour
             {
                 arrow3.color = entered;
                 place += 1;
+                done = true;
+
             }
         }
         if (spell == "Shocking Grasp")
@@ -173,6 +222,7 @@ public class SpellsLogic : MonoBehaviour
             {
                 arrow3.color = entered;
                 place += 1;
+                done = true;
             }
         }
         if (spell == "Dominate Person")
@@ -199,8 +249,9 @@ public class SpellsLogic : MonoBehaviour
             }
             else if (Input.GetKeyDown("d") && place == 4)
             {
-                arrow3.color = entered;
+                arrow4.color = entered;
                 place += 1;
+                done = true;
             }
         }
     }
