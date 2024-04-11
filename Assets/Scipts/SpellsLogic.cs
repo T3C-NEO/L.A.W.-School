@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
+
 
 public class SpellsLogic : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class SpellsLogic : MonoBehaviour
     public TextMeshProUGUI spellName;
 
     //gathering the arrows
+    public List<SpriteRenderer> arrows = new List<SpriteRenderer>();
     public SpriteRenderer arrow0;
     public SpriteRenderer arrow1;
     public SpriteRenderer arrow2;
@@ -17,13 +20,18 @@ public class SpellsLogic : MonoBehaviour
     public SpriteRenderer arrow5;
 
     //creating rotations for arrows
-    Quaternion up = new Quaternion(0, 0, 0, 0);
+    Quaternion up = Quaternion.Euler(0, 0, 0);
     Quaternion down = Quaternion.Euler(0, 0, 180);
     Quaternion left = Quaternion.Euler(0, 0, 90);
     Quaternion right = Quaternion.Euler(0, 0, 270);
 
     //the variable that sees how far in the spell you are
     int place = 0;
+
+    int max;
+
+    //audio for when you're wrong
+    public AudioSource wrong;
 
     //colors for the arrows
     Color entered = new Color(0.4f, 0.9f, 0, 1);
@@ -39,8 +47,6 @@ public class SpellsLogic : MonoBehaviour
 
     string spell;
 
-    //to see if you've finished the spell
-    bool done = true;
 
 
     // Start is called before the first frame update
@@ -59,6 +65,13 @@ public class SpellsLogic : MonoBehaviour
         threefivePos.Add(new Vector2(3, 0));
         threefivePos.Add(new Vector2(6, 0));
 
+        arrows.Add(arrow0);
+        arrows.Add(arrow1);
+        arrows.Add(arrow2);
+        arrows.Add(arrow3);
+        arrows.Add(arrow4);
+        arrows.Add(arrow5);
+
         //adding the spells to the list
         spellList.Add("Detect Magic");
         spellList.Add("Presto");
@@ -70,7 +83,7 @@ public class SpellsLogic : MonoBehaviour
     }
 
     //rolls a random spell and sets up thr arrows
-    void rollSpell()
+    public void rollSpell()
     {
         //resetting position and arrows
         place = 0;
@@ -83,6 +96,12 @@ public class SpellsLogic : MonoBehaviour
 
         //rolling the spell
         int i = Random.Range(0, spellList.Count);
+        while (spell == spellList[i])
+        {
+            i = Random.Range(0, spellList.Count);
+            Debug.Log("dsafsafsa");
+        }
+
         spellName.text = spellList[i];
         spell = spellList[i];
 
@@ -99,6 +118,7 @@ public class SpellsLogic : MonoBehaviour
             arrow0.gameObject.transform.position = threefivePos[1];
             arrow1.gameObject.transform.position = threefivePos[2];
             arrow2.gameObject.transform.position = threefivePos[3];
+            max = 3;
         }
         if (spell == "Presto" || spell == "Shocking Grasp")
         {
@@ -112,6 +132,8 @@ public class SpellsLogic : MonoBehaviour
             arrow1.gameObject.transform.position = fourPos[1];
             arrow2.gameObject.transform.position = fourPos[2];
             arrow3.gameObject.transform.position = fourPos[3];
+
+            max = 4;
         }
         if (spell == "Dominate Person")
         {
@@ -126,68 +148,165 @@ public class SpellsLogic : MonoBehaviour
             arrow2.gameObject.transform.position = threefivePos[2];
             arrow3.gameObject.transform.position = threefivePos[3];
             arrow4.gameObject.transform.position = threefivePos[4];
+        
+            max = 5;
         }
 
         //sets actual rotations for the spells
         if (spell == "Detect Magic")
         {
-            arrow0.gameObject.transform.rotation = down;
-            arrow1.gameObject.transform.rotation = up;
-            arrow2.gameObject.transform.rotation = down;
+            arrow0.gameObject.tag = "down";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "down";
         }
 
         if (spell == "Presto")
         {
-            arrow0.gameObject.transform.rotation = up;
-            arrow1.gameObject.transform.rotation = down;
-            arrow2.gameObject.transform.rotation = right;
-            arrow3.gameObject.transform.rotation = right;
+        
+            arrow0.gameObject.tag = "up";
+            arrow1.gameObject.tag = "down";
+            arrow2.gameObject.tag = "right";
+            arrow3.gameObject.tag = "right";
         }
         if (spell == "Shocking Grasp")
         {
-            arrow0.gameObject.transform.rotation = right;
-            arrow1.gameObject.transform.rotation = right;
-            arrow2.gameObject.transform.rotation = left;
-            arrow3.gameObject.transform.rotation = left;
+            arrow0.gameObject.tag = "right";
+            arrow1.gameObject.tag = "right";
+            arrow2.gameObject.tag = "left";
+            arrow3.gameObject.tag = "left";
         }
         if (spell == "Dominate Person")
         {
-            arrow0.gameObject.transform.rotation = down;
-            arrow1.gameObject.transform.rotation = up;
-            arrow2.gameObject.transform.rotation = left;
-            arrow3.gameObject.transform.rotation = left;
-            arrow4.gameObject.transform.rotation = right;
+            arrow0.gameObject.tag = "down";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "left";
+            arrow3.gameObject.tag = "left";
+            arrow4.gameObject.tag = "right";
         }
 
-        done = false;
+        for (int j = 0; j < arrows.Count; j++)
+        {
+            if (arrows[j].gameObject.tag == "up")
+            {
+                arrows[j].gameObject.transform.rotation = up;
+            }else if (arrows[j].gameObject.tag == "down")
+            {
+                arrows[j].gameObject.transform.rotation = down;
+            }else if (arrows[j].gameObject.tag == "left")
+            {
+                arrows[j].gameObject.transform.rotation = left;
+            }else if (arrows[j].gameObject.tag == "right")
+            {
+                arrows[j].gameObject.transform.rotation = right;
+            }
+        }
+
     }
 
-    // Update is called once per frame
+    public void Up(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            //if (arrows[place].gameObject.transform.rotation == up)
+            if (arrows[place].gameObject.tag == "up")
+            {
+                arrows[place].color = entered;
+                place ++;
+            }else
+            {
+                whoops();
+            }
+        }
+    }
+
+    public void Down(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (arrows[place].gameObject.tag == "down")
+            {
+                arrows[place].color = entered;
+                place ++;
+            }else
+            {
+                whoops();
+            }
+        }
+    }
+
+    public void Left(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (arrows[place].gameObject.tag == "left")
+            {
+                arrows[place].color = entered;
+                place ++;
+            }else
+            {
+                whoops();
+            }
+        }
+    }
+
+    public void Right(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (arrows[place].gameObject.tag == "right")
+            {
+                arrows[place].color = entered;
+                place ++;
+            }else
+            {
+                whoops();
+            }
+        }
+    }
+
+    void whoops()
+    {
+        place = 0;
+        wrong.Play(0);
+        Debug.Log("bad");
+        arrow0.color = clear;
+        arrow1.color = clear;
+        arrow2.color = clear;
+        arrow3.color = clear;
+        arrow4.color = clear;
+        arrow5.color = clear;
+    }
+
     void Update()
     {
         //rolls spell whenever you're done
-        if (done == true)
+        if (place == max)
+        {
+            rollSpell();
+        }
+        if (Input.GetKeyDown("space"))
         {
             rollSpell();
         }
 
+        /*
         //entering spells logic
         if (spell == "Detect Magic")
         {
             if (Input.GetKeyDown("s") && place == 0)
             {
                 arrow0.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("w") && place == 1)
             {
                 arrow1.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("s") && place == 2)
             {
                 arrow2.color = entered;
-                place += 1;
+                place ++;
                 done = true;
             }
         }
@@ -196,22 +315,22 @@ public class SpellsLogic : MonoBehaviour
             if (Input.GetKeyDown("w") && place == 0)
             {
                 arrow0.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("s") && place == 1)
             {
                 arrow1.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("d") && place == 2)
             {
                 arrow2.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("d") && place == 3)
             {
                 arrow3.color = entered;
-                place += 1;
+                place ++;
                 done = true;
 
             }
@@ -221,22 +340,22 @@ public class SpellsLogic : MonoBehaviour
             if (Input.GetKeyDown("d") && place == 0)
             {
                 arrow0.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("d") && place == 1)
             {
                 arrow1.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("a") && place == 2)
             {
                 arrow2.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("a") && place == 3)
             {
                 arrow3.color = entered;
-                place += 1;
+                place ++;
                 done = true;
             }
         }
@@ -245,29 +364,30 @@ public class SpellsLogic : MonoBehaviour
             if (Input.GetKeyDown("s") && place == 0)
             {
                 arrow0.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("w") && place == 1)
             {
                 arrow1.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("a") && place == 2)
             {
                 arrow2.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("a") && place == 3)
             {
                 arrow3.color = entered;
-                place += 1;
+                place ++;
             }
             else if (Input.GetKeyDown("d") && place == 4)
             {
                 arrow4.color = entered;
-                place += 1;
+                place ++;
                 done = true;
             }
         }
+        */
     }
 }
