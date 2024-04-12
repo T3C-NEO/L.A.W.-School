@@ -20,10 +20,10 @@ public class SpellsLogic : MonoBehaviour
     public SpriteRenderer arrow5;
 
     //creating rotations for arrows
-    Quaternion up = Quaternion.Euler(0, 0, 0);
-    Quaternion down = Quaternion.Euler(0, 0, 180);
-    Quaternion left = Quaternion.Euler(0, 0, 90);
-    Quaternion right = Quaternion.Euler(0, 0, 270);
+    Quaternion up = Quaternion.Euler(15, 0, 0);
+    Quaternion down = Quaternion.Euler(15, 0, 180);
+    Quaternion left = Quaternion.Euler(15, 0, 90);
+    Quaternion right = Quaternion.Euler(15, 0, 270);
 
     //the variable that sees how far in the spell you are
     int place = 0;
@@ -77,6 +77,7 @@ public class SpellsLogic : MonoBehaviour
         spellList.Add("Presto");
         spellList.Add("Shocking Grasp");
         spellList.Add("Dominate Person");
+        spellList.Add("Power Word Kill");
 
 
 
@@ -107,7 +108,7 @@ public class SpellsLogic : MonoBehaviour
 
 
         //sets arrows depending on how long the spell is
-        if (spell == "Detect Magic")
+        if (spell == "Detect Magic" || spell == "Power Word Kill")
         {
             arrow0.gameObject.SetActive(true);
             arrow1.gameObject.SetActive(true);
@@ -158,6 +159,13 @@ public class SpellsLogic : MonoBehaviour
             arrow0.gameObject.tag = "down";
             arrow1.gameObject.tag = "up";
             arrow2.gameObject.tag = "down";
+        }
+
+        if (spell == "Power Word Kill")
+        {
+            arrow0.gameObject.tag = "right";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "left";
         }
 
         if (spell == "Presto")
