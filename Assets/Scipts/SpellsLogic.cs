@@ -11,31 +11,37 @@ public class SpellsLogic : MonoBehaviour
     public TextMeshProUGUI spellName;
 
     //gathering the arrows
-    public List<SpriteRenderer> arrows = new List<SpriteRenderer>();
-    public SpriteRenderer arrow0;
-    public SpriteRenderer arrow1;
-    public SpriteRenderer arrow2;
-    public SpriteRenderer arrow3;
-    public SpriteRenderer arrow4;
-    public SpriteRenderer arrow5;
+    public List<MeshRenderer> arrows = new List<MeshRenderer>();
+    public MeshRenderer arrow0;
+    public MeshRenderer arrow1;
+    public MeshRenderer arrow2;
+    public MeshRenderer arrow3;
+    public MeshRenderer arrow4;
+    public MeshRenderer arrow5;
 
     //creating rotations for arrows
-    Quaternion up = Quaternion.Euler(15, 0, 0);
-    Quaternion down = Quaternion.Euler(15, 0, 180);
-    Quaternion left = Quaternion.Euler(15, 0, 90);
-    Quaternion right = Quaternion.Euler(15, 0, 270);
+    Quaternion up = Quaternion.Euler(-90, 0, 90);
+    Quaternion down = Quaternion.Euler(90, 90, 0);
+    Quaternion left = Quaternion.Euler(-180, 90, 0);
+    Quaternion right = Quaternion.Euler(0, 90, 0);
 
     //the variable that sees how far in the spell you are
     int place = 0;
 
     int max;
 
+    public GameObject spellsMenu;
+    public bool spellsMenuBool;
+
     //audio for when you're wrong
     public AudioSource wrong;
 
-    //colors for the arrows
+    //materials for the arrows
     Color entered = new Color(0.4f, 0.9f, 0, 1);
     Color clear = new Color(1, 1, 1, 1);
+
+    public Material enteredMat;
+    public Material clearMat;
 
     //creating where the positions are depending on how many arrows there are. Three and five share cuz 3 is just 5 without the outsides
     public List<Vector2> fourPos = new List<Vector2>();
@@ -79,8 +85,6 @@ public class SpellsLogic : MonoBehaviour
         spellList.Add("Dominate Person");
         spellList.Add("Power Word Kill");
 
-
-
     }
 
     //rolls a random spell and sets up thr arrows
@@ -88,12 +92,12 @@ public class SpellsLogic : MonoBehaviour
     {
         //resetting position and arrows
         place = 0;
-        arrow0.color = clear;
-        arrow1.color = clear;
-        arrow2.color = clear;
-        arrow3.color = clear;
-        arrow4.color = clear;
-        arrow5.color = clear;
+        arrow0.material = clearMat;
+        arrow1.material = clearMat;
+        arrow2.material = clearMat;
+        arrow3.material = clearMat;
+        arrow4.material = clearMat;
+        arrow5.material = clearMat;
 
         //rolling the spell
         int i = Random.Range(0, spellList.Count);
@@ -218,7 +222,7 @@ public class SpellsLogic : MonoBehaviour
             //if (arrows[place].gameObject.transform.rotation == up)
             if (arrows[place].gameObject.tag == "up")
             {
-                arrows[place].color = entered;
+                arrows[place].material = enteredMat;
                 place ++;
             }else
             {
@@ -233,7 +237,7 @@ public class SpellsLogic : MonoBehaviour
         {
             if (arrows[place].gameObject.tag == "down")
             {
-                arrows[place].color = entered;
+                arrows[place].material = enteredMat;
                 place ++;
             }else
             {
@@ -248,7 +252,7 @@ public class SpellsLogic : MonoBehaviour
         {
             if (arrows[place].gameObject.tag == "left")
             {
-                arrows[place].color = entered;
+                arrows[place].material = enteredMat;
                 place ++;
             }else
             {
@@ -263,7 +267,7 @@ public class SpellsLogic : MonoBehaviour
         {
             if (arrows[place].gameObject.tag == "right")
             {
-                arrows[place].color = entered;
+                arrows[place].material = enteredMat;
                 place ++;
             }else
             {
@@ -277,12 +281,12 @@ public class SpellsLogic : MonoBehaviour
         place = 0;
         wrong.Play(0);
         Debug.Log("bad");
-        arrow0.color = clear;
-        arrow1.color = clear;
-        arrow2.color = clear;
-        arrow3.color = clear;
-        arrow4.color = clear;
-        arrow5.color = clear;
+        arrow0.material = clearMat;
+        arrow1.material = clearMat;
+        arrow2.material = clearMat;
+        arrow3.material = clearMat;
+        arrow4.material = clearMat;
+        arrow5.material = clearMat;
     }
 
     void Update()
@@ -297,23 +301,29 @@ public class SpellsLogic : MonoBehaviour
             rollSpell();
         }
 
+        if (Input.GetKeyDown("escape"))
+        {
+            spellsMenuBool = !spellsMenuBool;
+            spellsMenu.SetActive(spellsMenuBool);
+        }
+
         /*
         //entering spells logic
         if (spell == "Detect Magic")
         {
             if (Input.GetKeyDown("s") && place == 0)
             {
-                arrow0.color = entered;
+                arrow0.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("w") && place == 1)
             {
-                arrow1.color = entered;
+                arrow1.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("s") && place == 2)
             {
-                arrow2.color = entered;
+                arrow2.material = entered;
                 place ++;
                 done = true;
             }
@@ -322,22 +332,22 @@ public class SpellsLogic : MonoBehaviour
         {
             if (Input.GetKeyDown("w") && place == 0)
             {
-                arrow0.color = entered;
+                arrow0.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("s") && place == 1)
             {
-                arrow1.color = entered;
+                arrow1.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("d") && place == 2)
             {
-                arrow2.color = entered;
+                arrow2.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("d") && place == 3)
             {
-                arrow3.color = entered;
+                arrow3.material = entered;
                 place ++;
                 done = true;
 
@@ -347,22 +357,22 @@ public class SpellsLogic : MonoBehaviour
         {
             if (Input.GetKeyDown("d") && place == 0)
             {
-                arrow0.color = entered;
+                arrow0.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("d") && place == 1)
             {
-                arrow1.color = entered;
+                arrow1.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("a") && place == 2)
             {
-                arrow2.color = entered;
+                arrow2.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("a") && place == 3)
             {
-                arrow3.color = entered;
+                arrow3.material = entered;
                 place ++;
                 done = true;
             }
@@ -371,27 +381,27 @@ public class SpellsLogic : MonoBehaviour
         {
             if (Input.GetKeyDown("s") && place == 0)
             {
-                arrow0.color = entered;
+                arrow0.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("w") && place == 1)
             {
-                arrow1.color = entered;
+                arrow1.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("a") && place == 2)
             {
-                arrow2.color = entered;
+                arrow2.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("a") && place == 3)
             {
-                arrow3.color = entered;
+                arrow3.material = entered;
                 place ++;
             }
             else if (Input.GetKeyDown("d") && place == 4)
             {
-                arrow4.color = entered;
+                arrow4.material = entered;
                 place ++;
                 done = true;
             }
