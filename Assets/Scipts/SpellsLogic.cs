@@ -71,6 +71,14 @@ public class SpellsLogic : MonoBehaviour
         threefivePos.Add(new Vector2(3, 0));
         threefivePos.Add(new Vector2(6, 0));
 
+        //positions for a spell with six commands
+        sixPos.Add(new Vector2(-7.5f, 0));
+        sixPos.Add(new Vector2(-4.5f, 0));
+        sixPos.Add(new Vector2(-1.5f, 0));
+        sixPos.Add(new Vector2(1.5f, 0));
+        sixPos.Add(new Vector2(4.5f, 0));
+        sixPos.Add(new Vector2(7.5f, 0));
+
         arrows.Add(arrow0);
         arrows.Add(arrow1);
         arrows.Add(arrow2);
