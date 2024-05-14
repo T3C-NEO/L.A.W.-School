@@ -1,12 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 
 
 public class SpellsLogic : MonoBehaviour
 {
+
+    //losing and pausing
+    bool lose = false;
+    bool pause = false;
+
+    //scoring
+    int score = 0;
+    int highScore = 0;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
+
+    //creating the timer
+    [SerializeField] float remainingTime;
+    [SerializeField] Slider timer;
+
     //the text that will display the spell name
     public TextMeshProUGUI spellName;
 
@@ -30,8 +46,12 @@ public class SpellsLogic : MonoBehaviour
 
     int max;
 
+    //pause and end screens
     public GameObject spellsMenu;
-    public bool spellsMenuBool;
+    public GameObject endsMenu;
+
+    List<string> lines = new List<string>();
+    public TextMeshProUGUI linesText;
 
     //audio for when you're wrong
     public AudioSource wrong;
@@ -93,6 +113,13 @@ public class SpellsLogic : MonoBehaviour
         spellList.Add("Dominate Person");
         spellList.Add("Power Word Kill");
 
+        lines.Add("My grandmother could do better!");
+        lines.Add("GAAAAAAAAAAAAAARBAGE!");
+        lines.Add("What, do you want a medal?");
+        lines.Add("Passable.");
+        lines.Add("Objection!");
+        lines.Add("Just... Do better next time");
+
     }
 
     //rolls a random spell and sets up thr arrows
@@ -106,6 +133,11 @@ public class SpellsLogic : MonoBehaviour
         arrow3.material = clearMat;
         arrow4.material = clearMat;
         arrow5.material = clearMat;
+
+        //adds a second to the timer
+        remainingTime++;
+
+        score++;
 
         //rolling the spell
         int i = Random.Range(0, spellList.Count);
@@ -225,61 +257,79 @@ public class SpellsLogic : MonoBehaviour
 
     public void Up(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (lose == false && pause == false)
         {
-            //if (arrows[place].gameObject.transform.rotation == up)
-            if (arrows[place].gameObject.tag == "up")
+            if (context.performed)
             {
-                arrows[place].material = enteredMat;
-                place ++;
-            }else
-            {
-                whoops();
+                //if (arrows[place].gameObject.transform.rotation == up)
+                if (arrows[place].gameObject.tag == "up")
+                {
+                    arrows[place].material = enteredMat;
+                    place++;
+                }
+                else
+                {
+                    whoops();
+                }
             }
         }
     }
 
     public void Down(InputAction.CallbackContext context)
     {
-        if (context.performed)
+
+        if (lose == false && pause == false)
         {
-            if (arrows[place].gameObject.tag == "down")
+            if (context.performed)
             {
-                arrows[place].material = enteredMat;
-                place ++;
-            }else
-            {
-                whoops();
+                if (arrows[place].gameObject.tag == "down")
+                {
+                    arrows[place].material = enteredMat;
+                    place++;
+                }
+                else
+                {
+                    whoops();
+                }
             }
         }
     }
 
     public void Left(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (lose == false && pause == false)
         {
-            if (arrows[place].gameObject.tag == "left")
+            if (context.performed)
             {
-                arrows[place].material = enteredMat;
-                place ++;
-            }else
-            {
-                whoops();
+                if (arrows[place].gameObject.tag == "left")
+                {
+                    arrows[place].material = enteredMat;
+                    place++;
+                }
+                else
+                {
+                    whoops();
+                }
             }
         }
     }
 
     public void Right(InputAction.CallbackContext context)
     {
-        if (context.performed)
+
+        if (lose == false && pause == false)
         {
-            if (arrows[place].gameObject.tag == "right")
+            if (context.performed)
             {
-                arrows[place].material = enteredMat;
-                place ++;
-            }else
-            {
-                whoops();
+                if (arrows[place].gameObject.tag == "right")
+                {
+                    arrows[place].material = enteredMat;
+                    place++;
+                }
+                else
+                {
+                    whoops();
+                }
             }
         }
     }
@@ -299,121 +349,49 @@ public class SpellsLogic : MonoBehaviour
 
     void Update()
     {
-        //rolls spell whenever you're done
-        if (place == max)
+        if (lose == false && pause == false)
         {
-            rollSpell();
+            remainingTime -= Time.deltaTime;
+            timer.value = remainingTime;
+            //rolls spell whenever you're done
+            if (place == max)
+            {
+                rollSpell();
+            }
+            if (Input.GetKeyDown("space"))
+            {
+                rollSpell();
+            }
         }
-        if (Input.GetKeyDown("space"))
-        {
-            rollSpell();
-        }
-
         if (Input.GetKeyDown("escape"))
         {
-            spellsMenuBool = !spellsMenuBool;
-            spellsMenu.SetActive(spellsMenuBool);
+            pause = !pause;
+            spellsMenu.SetActive(pause);
         }
-
-        /*
-        //entering spells logic
-        if (spell == "Detect Magic")
+        if (remainingTime <= 0)
         {
-            if (Input.GetKeyDown("s") && place == 0)
+            if (lose == false)
             {
-                arrow0.material = entered;
-                place ++;
+                int i = Random.Range(0, lines.Count);
+                linesText.text = lines[i] + " -Professor Ex-Lawyer";
             }
-            else if (Input.GetKeyDown("w") && place == 1)
+            lose = true;
+            if (score > highScore)
             {
-                arrow1.material = entered;
-                place ++;
+                highScore = score;
             }
-            else if (Input.GetKeyDown("s") && place == 2)
-            {
-                arrow2.material = entered;
-                place ++;
-                done = true;
-            }
+            highScoreText.text = "High Score: " + highScore;
+            scoreText.text = "Score: " + score;
+            endsMenu.SetActive(true);
+            spellName.gameObject.SetActive(false);
         }
-        if (spell == "Presto")
-        {
-            if (Input.GetKeyDown("w") && place == 0)
-            {
-                arrow0.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("s") && place == 1)
-            {
-                arrow1.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("d") && place == 2)
-            {
-                arrow2.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("d") && place == 3)
-            {
-                arrow3.material = entered;
-                place ++;
-                done = true;
-
-            }
-        }
-        if (spell == "Shocking Grasp")
-        {
-            if (Input.GetKeyDown("d") && place == 0)
-            {
-                arrow0.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("d") && place == 1)
-            {
-                arrow1.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("a") && place == 2)
-            {
-                arrow2.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("a") && place == 3)
-            {
-                arrow3.material = entered;
-                place ++;
-                done = true;
-            }
-        }
-        if (spell == "Dominate Person")
-        {
-            if (Input.GetKeyDown("s") && place == 0)
-            {
-                arrow0.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("w") && place == 1)
-            {
-                arrow1.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("a") && place == 2)
-            {
-                arrow2.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("a") && place == 3)
-            {
-                arrow3.material = entered;
-                place ++;
-            }
-            else if (Input.GetKeyDown("d") && place == 4)
-            {
-                arrow4.material = entered;
-                place ++;
-                done = true;
-            }
-        }
-        */
+    }
+    public void Restart()
+    {
+        remainingTime = 30;
+        rollSpell();
+        endsMenu.SetActive(false);
+        spellName.gameObject.SetActive(true);
+        lose = false;
     }
 }
