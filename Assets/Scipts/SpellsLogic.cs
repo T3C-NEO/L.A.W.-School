@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 
 public class SpellsLogic : MonoBehaviour
@@ -64,9 +65,8 @@ public class SpellsLogic : MonoBehaviour
     public Material clearMat;
 
     //creating where the positions are depending on how many arrows there are. Three and five share cuz 3 is just 5 without the outsides
-    public List<Vector2> fourPos = new List<Vector2>();
     public List<Vector2> threefivePos = new List<Vector2>();
-    public List<Vector2> sixPos = new List<Vector2>();
+    public List<Vector2> foursixPos = new List<Vector2>();
 
     //the list of spells
     public List<string> spellList = new List<string>();
@@ -78,12 +78,6 @@ public class SpellsLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //positions for a spell with four commands
-        fourPos.Add(new Vector2(-4.5f, 0));
-        fourPos.Add(new Vector2(-1.5f, 0));
-        fourPos.Add(new Vector2(1.5f, 0));
-        fourPos.Add(new Vector2(4.5f, 0));
-
         //positions for a spell with five or three commands
         threefivePos.Add(new Vector2(-6, 0));
         threefivePos.Add(new Vector2(-3, 0));
@@ -92,12 +86,12 @@ public class SpellsLogic : MonoBehaviour
         threefivePos.Add(new Vector2(6, 0));
 
         //positions for a spell with six commands
-        sixPos.Add(new Vector2(-7.5f, 0));
-        sixPos.Add(new Vector2(-4.5f, 0));
-        sixPos.Add(new Vector2(-1.5f, 0));
-        sixPos.Add(new Vector2(1.5f, 0));
-        sixPos.Add(new Vector2(4.5f, 0));
-        sixPos.Add(new Vector2(7.5f, 0));
+        foursixPos.Add(new Vector2(-7.5f, 0));
+        foursixPos.Add(new Vector2(-4.5f, 0));
+        foursixPos.Add(new Vector2(-1.5f, 0));
+        foursixPos.Add(new Vector2(1.5f, 0));
+        foursixPos.Add(new Vector2(4.5f, 0));
+        foursixPos.Add(new Vector2(7.5f, 0));
 
         arrows.Add(arrow0);
         arrows.Add(arrow1);
@@ -107,7 +101,7 @@ public class SpellsLogic : MonoBehaviour
         arrows.Add(arrow5);
 
         //adding the spells to the list
-        spellList.Add("Detect Magic");
+        spellList.Add("Ignis");
         spellList.Add("Presto");
         spellList.Add("Shocking Grasp");
         spellList.Add("Dominate Person");
@@ -140,19 +134,24 @@ public class SpellsLogic : MonoBehaviour
         score++;
 
         //rolling the spell
-        int i = Random.Range(0, spellList.Count);
-        while (spell == spellList[i])
+        if (spellList.Count > 1)
         {
-            i = Random.Range(0, spellList.Count);
-            Debug.Log("dsafsafsa");
+            int i = Random.Range(0, spellList.Count);
+            while (spell == spellList[i])
+            {
+                i = Random.Range(0, spellList.Count);
+            }
+
+            spellName.text = spellList[i];
+            spell = spellList[i];
+        }else
+        {
+            spellName.text = "Prestidigitation";
+            spell = "Prestidigitation";
         }
 
-        spellName.text = spellList[i];
-        spell = spellList[i];
-
-
-        //sets arrows depending on how long the spell is
-        if (spell == "Detect Magic" || spell == "Power Word Kill")
+            //sets arrows depending on how long the spell is
+        if (spell == "Ignis" || spell == "Power Word Kill")
         {
             arrow0.gameObject.SetActive(true);
             arrow1.gameObject.SetActive(true);
@@ -163,6 +162,7 @@ public class SpellsLogic : MonoBehaviour
             arrow0.gameObject.transform.position = threefivePos[1];
             arrow1.gameObject.transform.position = threefivePos[2];
             arrow2.gameObject.transform.position = threefivePos[3];
+
             max = 3;
         }
         if (spell == "Presto" || spell == "Shocking Grasp")
@@ -173,10 +173,10 @@ public class SpellsLogic : MonoBehaviour
             arrow3.gameObject.SetActive(true);
             arrow4.gameObject.SetActive(false);
             arrow5.gameObject.SetActive(false);
-            arrow0.gameObject.transform.position = fourPos[0];
-            arrow1.gameObject.transform.position = fourPos[1];
-            arrow2.gameObject.transform.position = fourPos[2];
-            arrow3.gameObject.transform.position = fourPos[3];
+            arrow0.gameObject.transform.position = foursixPos[1];
+            arrow1.gameObject.transform.position = foursixPos[2];
+            arrow2.gameObject.transform.position = foursixPos[3];
+            arrow3.gameObject.transform.position = foursixPos[4];
 
             max = 4;
         }
@@ -193,16 +193,34 @@ public class SpellsLogic : MonoBehaviour
             arrow2.gameObject.transform.position = threefivePos[2];
             arrow3.gameObject.transform.position = threefivePos[3];
             arrow4.gameObject.transform.position = threefivePos[4];
-        
+
             max = 5;
         }
 
+        if (spell == "Prestidigitation")
+        {
+            arrow0.gameObject.SetActive(true);
+            arrow1.gameObject.SetActive(true);
+            arrow2.gameObject.SetActive(true);
+            arrow3.gameObject.SetActive(true);
+            arrow4.gameObject.SetActive(true);
+            arrow5.gameObject.SetActive(true);
+            arrow0.gameObject.transform.position = foursixPos[0];
+            arrow1.gameObject.transform.position = foursixPos[1];
+            arrow2.gameObject.transform.position = foursixPos[2];
+            arrow3.gameObject.transform.position = foursixPos[3];
+            arrow4.gameObject.transform.position = foursixPos[4];
+            arrow5.gameObject.transform.position = foursixPos[5];
+
+            max = 6;
+        }
+
         //sets actual rotations for the spells
-        if (spell == "Detect Magic")
+        if (spell == "Ignis")
         {
             arrow0.gameObject.tag = "down";
-            arrow1.gameObject.tag = "up";
-            arrow2.gameObject.tag = "down";
+            arrow1.gameObject.tag = "right";
+            arrow2.gameObject.tag = "right";
         }
 
         if (spell == "Power Word Kill")
@@ -214,7 +232,7 @@ public class SpellsLogic : MonoBehaviour
 
         if (spell == "Presto")
         {
-        
+
             arrow0.gameObject.tag = "up";
             arrow1.gameObject.tag = "down";
             arrow2.gameObject.tag = "right";
@@ -235,24 +253,44 @@ public class SpellsLogic : MonoBehaviour
             arrow3.gameObject.tag = "left";
             arrow4.gameObject.tag = "right";
         }
-
-        for (int j = 0; j < arrows.Count; j++)
+        if (spell == "Prestidigitation")
         {
-            if (arrows[j].gameObject.tag == "up")
-            {
-                arrows[j].gameObject.transform.rotation = up;
-            }else if (arrows[j].gameObject.tag == "down")
-            {
-                arrows[j].gameObject.transform.rotation = down;
-            }else if (arrows[j].gameObject.tag == "left")
-            {
-                arrows[j].gameObject.transform.rotation = left;
-            }else if (arrows[j].gameObject.tag == "right")
-            {
-                arrows[j].gameObject.transform.rotation = right;
-            }
+
+            List<string> direc = new List<string>();
+            direc.Add("up");
+            direc.Add("down");
+            direc.Add("left");
+            direc.Add("right");
+            int i0 = Random.Range(0, 3);
+            int i1 = Random.Range(0, 3);
+            int i2 = Random.Range(0, 3);
+            int i3 = Random.Range(0, 3);
+            int i4 = Random.Range(0, 3);
+            int i5 = Random.Range(0, 3);
+            arrow0.gameObject.tag = direc[i0];
+            arrow1.gameObject.tag = direc[i1];
+            arrow2.gameObject.tag = direc[i2];
+            arrow3.gameObject.tag = direc[i3];
+            arrow4.gameObject.tag = direc[i4];
+            arrow5.gameObject.tag = direc[i5];
         }
 
+        for (int j = 0; j < arrows.Count; j++)
+            {
+                if (arrows[j].gameObject.tag == "up")
+                {
+                    arrows[j].gameObject.transform.rotation = up;
+                } else if (arrows[j].gameObject.tag == "down")
+                {
+                    arrows[j].gameObject.transform.rotation = down;
+                } else if (arrows[j].gameObject.tag == "left")
+                {
+                    arrows[j].gameObject.transform.rotation = left;
+                } else if (arrows[j].gameObject.tag == "right")
+                {
+                    arrows[j].gameObject.transform.rotation = right;
+                }
+            }
     }
 
     public void Up(InputAction.CallbackContext context)
@@ -345,6 +383,19 @@ public class SpellsLogic : MonoBehaviour
         arrow3.material = clearMat;
         arrow4.material = clearMat;
         arrow5.material = clearMat;
+    }
+    
+    public void OnClicked(Toggle button)
+    {
+        print(button.name);
+        if (button.isOn == false)
+        {
+            spellList.Remove(button.name);
+        }
+        else
+        {
+            spellList.Add(button.name);
+        }
     }
 
     void Update()
