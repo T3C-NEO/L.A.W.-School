@@ -38,9 +38,9 @@ public class SpellsLogic : MonoBehaviour
 
     //creating rotations for arrows
     Quaternion up = Quaternion.Euler(-90, 0, 90);
-    Quaternion down = Quaternion.Euler(90, 90, 0);
-    Quaternion left = Quaternion.Euler(-180, 90, 0);
-    Quaternion right = Quaternion.Euler(0, 90, 0);
+    Quaternion dow = Quaternion.Euler(90, 90, 0);
+    Quaternion le = Quaternion.Euler(-180, 90, 0);
+    Quaternion ri = Quaternion.Euler(0, 90, 0);
 
     //the variable that sees how far in the spell you are
     int place = 0;
@@ -102,17 +102,57 @@ public class SpellsLogic : MonoBehaviour
 
         //adding the spells to the list
         spellList.Add("Ignis");
-        spellList.Add("Presto");
-        spellList.Add("Shocking Grasp");
-        spellList.Add("Dominate Person");
-        spellList.Add("Power Word Kill");
+        spellList.Add("Eldritch Ray");
+        spellList.Add("Barrier");
+        spellList.Add("Charm");
+        spellList.Add("Detect Spell");
+        spellList.Add("Magic Missile");
+        spellList.Add("Mend Wound");
+        spellList.Add("Foggy Step");
+        spellList.Add("Reanimate");
+        spellList.Add("Speed");
+        spellList.Add("Power Word");
+        spellList.Add("Grant Wish");
+        spellList.Add("Fireball");
+
+        spellList.Add("Twenty Six");
+        spellList.Add("Drac Flow");
+        spellList.Add("Sigma");
+        spellList.Add("Once Asking");
+        spellList.Add("Wojeks");
+        spellList.Add("Crease Jorn");
+        spellList.Add("Jinner");
+        spellList.Add("Skibidi");
+        spellList.Add("Dead Heavy");
+        spellList.Add("Weatherboy");
+        spellList.Add("Bad Luck");
+        spellList.Add("Yassification");
+        spellList.Add("Walkin'");
+        
+        spellList.Add("Antiperson");
+        spellList.Add("Helltower");
+        spellList.Add("Raven Wings");
+        spellList.Add("Trash Blast");
+        spellList.Add("Starbeam");
+        spellList.Add("Enforce");
+        spellList.Add("Raven's Call");
+        spellList.Add("Raven Bomb");
+        spellList.Add("Dawn Fire");
+        spellList.Add("Fire Barrier");
+        spellList.Add("Hellhound");
+        spellList.Add("Pain Rain");
+        spellList.Add("Hellbomb");
+
+
+
+        
 
         lines.Add("My grandmother could do better!");
         lines.Add("GAAAAAAAAAAAAAARBAGE!");
         lines.Add("What, do you want a medal?");
         lines.Add("Passable.");
         lines.Add("Objection!");
-        lines.Add("Just... Do better next time");
+        lines.Add("Just... Do better next time...");
 
     }
 
@@ -150,8 +190,8 @@ public class SpellsLogic : MonoBehaviour
             spell = "Prestidigitation";
         }
 
-            //sets arrows depending on how long the spell is
-        if (spell == "Ignis" || spell == "Power Word Kill")
+        //sets arrows depending on how long the spell is
+        if (spell == "Sigma" || spell == "Drac Flow" || spell == "Twenty Six" || spell == "Detect Spell" || spell == "Charm" || spell == "Barrier" || spell == "Eldritch Ray" || spell == "Ignis")
         {
             arrow0.gameObject.SetActive(true);
             arrow1.gameObject.SetActive(true);
@@ -165,7 +205,7 @@ public class SpellsLogic : MonoBehaviour
 
             max = 3;
         }
-        if (spell == "Presto" || spell == "Shocking Grasp")
+        if (spell == "Raven Wings" || spell == "Helltower" || spell == "Antiperson" || spell == "Wojeks" || spell == "Once Asking" || spell == "Foggy Step" || spell == "Mend Wound" || spell == "Magic Missile")
         {
             arrow0.gameObject.SetActive(true);
             arrow1.gameObject.SetActive(true);
@@ -180,7 +220,7 @@ public class SpellsLogic : MonoBehaviour
 
             max = 4;
         }
-        if (spell == "Dominate Person")
+        if (spell == "Dawn Fire" || spell == "Raven Bomb" || spell == "Raven's Call" || spell == "Enforce" || spell == "Starbeam" || spell == "Trash Blast" || spell == "Dead Heavy" || spell == "Skibidi" || spell == "Jinner" || spell == "Crease Jorn" || spell == "Power Word" || spell == "Speed" || spell == "Reanimate")
         {
             arrow0.gameObject.SetActive(true);
             arrow1.gameObject.SetActive(true);
@@ -196,8 +236,7 @@ public class SpellsLogic : MonoBehaviour
 
             max = 5;
         }
-
-        if (spell == "Prestidigitation")
+        if (spell == "Prestidigitation" || spell == "Hellbomb" || spell == "Pain Rain" || spell == "Hellhound" || spell == "Fire Barrier" || spell == "Walkin'" || spell == "Yassification" || spell == "Bad Luck" || spell == "Weatherboy" || spell == "Fireball" || spell == "Grant Wish")
         {
             arrow0.gameObject.SetActive(true);
             arrow1.gameObject.SetActive(true);
@@ -218,49 +257,109 @@ public class SpellsLogic : MonoBehaviour
         //sets actual rotations for the spells
         if (spell == "Ignis")
         {
-            arrow0.gameObject.tag = "down";
-            arrow1.gameObject.tag = "right";
-            arrow2.gameObject.tag = "right";
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "ri";
         }
 
-        if (spell == "Power Word Kill")
+        if (spell == "Eldritch Ray")
         {
-            arrow0.gameObject.tag = "right";
-            arrow1.gameObject.tag = "up";
-            arrow2.gameObject.tag = "left";
+            arrow0.gameObject.tag = "le";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "up";
         }
 
-        if (spell == "Presto")
+        if (spell == "Barrier")
         {
-
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "do";
+            arrow2.gameObject.tag = "up";
+        }
+        if (spell == "Charm")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "ri";
+        }
+        if (spell == "Detect Spell")
+        {
+            arrow0.gameObject.tag = "le";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "le";
+        }
+        if (spell == "Magic Missile")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "ri";
+            arrow3.gameObject.tag = "ri";
+        }
+        if (spell == "Mend Wound")
+        {
             arrow0.gameObject.tag = "up";
-            arrow1.gameObject.tag = "down";
-            arrow2.gameObject.tag = "right";
-            arrow3.gameObject.tag = "right";
-        }
-        if (spell == "Shocking Grasp")
-        {
-            arrow0.gameObject.tag = "right";
-            arrow1.gameObject.tag = "right";
-            arrow2.gameObject.tag = "left";
-            arrow3.gameObject.tag = "left";
-        }
-        if (spell == "Dominate Person")
-        {
-            arrow0.gameObject.tag = "down";
             arrow1.gameObject.tag = "up";
-            arrow2.gameObject.tag = "left";
-            arrow3.gameObject.tag = "left";
-            arrow4.gameObject.tag = "right";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "le";
         }
+        if (spell == "Foggy Step")
+        {
+            arrow0.gameObject.tag = "le";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "do";
+            arrow3.gameObject.tag = "do";
+        }
+        if (spell == "Reanimate")
+        {
+            arrow0.gameObject.tag = "le";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "ri";
+            arrow3.gameObject.tag = "ri";
+            arrow4.gameObject.tag = "do";
+        }
+        if (spell == "Speed")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "ri";
+            arrow3.gameObject.tag = "ri";
+            arrow4.gameObject.tag = "ri";
+        }
+        if (spell == "Power Word")
+        {
+            arrow0.gameObject.tag = "up";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "do";
+            arrow3.gameObject.tag = "do";
+            arrow4.gameObject.tag = "do";
+        }
+        if (spell == "Grant Wish")
+        {
+            arrow0.gameObject.tag = "ri";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "up";
+            arrow4.gameObject.tag = "up";
+            arrow4.gameObject.tag = "ri";
+        }
+        if (spell == "Fireball")
+        {
+            arrow0.gameObject.tag = "le";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "le";
+            arrow3.gameObject.tag = "le";
+            arrow4.gameObject.tag = "le";
+            arrow5.gameObject.tag = "ri";
+        }
+
+
         if (spell == "Prestidigitation")
         {
 
             List<string> direc = new List<string>();
             direc.Add("up");
-            direc.Add("down");
-            direc.Add("left");
-            direc.Add("right");
+            direc.Add("do");
+            direc.Add("le");
+            direc.Add("ri");
             int i0 = Random.Range(0, 3);
             int i1 = Random.Range(0, 3);
             int i2 = Random.Range(0, 3);
@@ -280,15 +379,15 @@ public class SpellsLogic : MonoBehaviour
                 if (arrows[j].gameObject.tag == "up")
                 {
                     arrows[j].gameObject.transform.rotation = up;
-                } else if (arrows[j].gameObject.tag == "down")
+                } else if (arrows[j].gameObject.tag == "do")
                 {
-                    arrows[j].gameObject.transform.rotation = down;
-                } else if (arrows[j].gameObject.tag == "left")
+                    arrows[j].gameObject.transform.rotation = dow;
+                } else if (arrows[j].gameObject.tag == "le")
                 {
-                    arrows[j].gameObject.transform.rotation = left;
-                } else if (arrows[j].gameObject.tag == "right")
+                    arrows[j].gameObject.transform.rotation = le;
+                } else if (arrows[j].gameObject.tag == "ri")
                 {
-                    arrows[j].gameObject.transform.rotation = right;
+                    arrows[j].gameObject.transform.rotation = ri;
                 }
             }
     }
@@ -320,7 +419,7 @@ public class SpellsLogic : MonoBehaviour
         {
             if (context.performed)
             {
-                if (arrows[place].gameObject.tag == "down")
+                if (arrows[place].gameObject.tag == "do")
                 {
                     arrows[place].material = enteredMat;
                     place++;
@@ -339,7 +438,7 @@ public class SpellsLogic : MonoBehaviour
         {
             if (context.performed)
             {
-                if (arrows[place].gameObject.tag == "left")
+                if (arrows[place].gameObject.tag == "le")
                 {
                     arrows[place].material = enteredMat;
                     place++;
@@ -359,7 +458,7 @@ public class SpellsLogic : MonoBehaviour
         {
             if (context.performed)
             {
-                if (arrows[place].gameObject.tag == "right")
+                if (arrows[place].gameObject.tag == "ri")
                 {
                     arrows[place].material = enteredMat;
                     place++;

@@ -5,9 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - up
-  - down
-  - left
-  - right
+  - do
+  - le
+  - ri
   layers:
   - Default
   - TransparentFX
