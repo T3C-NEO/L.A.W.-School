@@ -56,48 +56,11 @@ public class SpellsLogic : MonoBehaviour
 
     //audio for when you're wrong
     public AudioSource wrong;
+    public AudioSource music;
 
+    int musicTrack = 0;
     public List<AudioClip> audioList = new List<AudioClip>();
-    public AudioClip sound0;
-    public AudioClip sound1;
-    public AudioClip sound2;
-    public AudioClip sound4;
-    public AudioClip sound5;
-    public AudioClip sound6;
-    public AudioClip sound7;
-    public AudioClip sound8;
-    public AudioClip sound9;
-    public AudioClip sound10;
-    public AudioClip sound11;
-    public AudioClip sound12;
-    public AudioClip sound13;
-    public AudioClip sound14;
-    public AudioClip sound15;
-    public AudioClip sound16;
-    public AudioClip sound17;
-    public AudioClip sound18;
-    public AudioClip sound19;
-    public AudioClip sound20;
-    public AudioClip sound21;
-    public AudioClip sound22;
-    public AudioClip sound23;
-    public AudioClip sound24;
-    public AudioClip sound25;
-    public AudioClip sound26;
-    public AudioClip sound27;
-    public AudioClip sound28;
-    public AudioClip sound29;
-    public AudioClip sound30;
-    public AudioClip sound31;
-    public AudioClip sound32;
-    public AudioClip sound33;
-    public AudioClip sound34;
-    public AudioClip sound35;
-    public AudioClip sound36;
-    public AudioClip sound37;
-    public AudioClip sound38;
-    public AudioClip sound39;
-    public AudioClip sound40;
+    public List<AudioClip> musicList = new List<AudioClip>();
     public AudioClip end;
 
     //materials for the arrows
@@ -189,46 +152,6 @@ public class SpellsLogic : MonoBehaviour
 
 
         //adding audio
-        audioList.Add(sound0);
-        audioList.Add(sound1);
-        audioList.Add(sound2);
-        audioList.Add(sound4);
-        audioList.Add(sound5);
-        audioList.Add(sound6);
-        audioList.Add(sound7);
-        audioList.Add(sound8);
-        audioList.Add(sound9);
-        audioList.Add(sound10);
-        audioList.Add(sound11);
-        audioList.Add(sound12);
-        audioList.Add(sound13);
-        audioList.Add(sound14);
-        audioList.Add(sound15);
-        audioList.Add(sound16);
-        audioList.Add(sound17);
-        audioList.Add(sound18);
-        audioList.Add(sound19);
-        audioList.Add(sound20);
-        audioList.Add(sound21);
-        audioList.Add(sound22);
-        audioList.Add(sound23);
-        audioList.Add(sound24);
-        audioList.Add(sound25);
-        audioList.Add(sound26);
-        audioList.Add(sound27);
-        audioList.Add(sound28);
-        audioList.Add(sound29);
-        audioList.Add(sound30);
-        audioList.Add(sound31);
-        audioList.Add(sound32);
-        audioList.Add(sound33);
-        audioList.Add(sound34);
-        audioList.Add(sound35);
-        audioList.Add(sound36);
-        audioList.Add(sound37);
-        audioList.Add(sound38);
-        audioList.Add(sound39);
-        audioList.Add(sound40);
         
         //bitch lines for the end of the round
         lines.Add("My grandmother could do better!");
@@ -799,6 +722,16 @@ public class SpellsLogic : MonoBehaviour
 
     void Update()
     {
+        if (!music.isPlaying)
+        {
+            music.clip = musicList[musicTrack];
+            music.Play();
+            musicTrack++;
+            if (musicTrack >= 5)
+            {
+                musicTrack = 0;
+            }
+        }
         if (lose == false && pause == false)
         {
             remainingTime -= Time.deltaTime;
@@ -810,10 +743,14 @@ public class SpellsLogic : MonoBehaviour
             }
         }
         //open the pause menu
-        if (Input.GetKeyDown("escape") || Input.GetKeyDown("space"))
+        if ((Input.GetKeyDown("escape") || Input.GetKeyDown("space")) && lose == false)
         {
             pause = !pause;
             spellsMenu.SetActive(pause);
+        }
+        if ((Input.GetKeyDown("escape") || Input.GetKeyDown("space")) && lose == true)
+        {
+            Restart();
         }
         //handles losing the game and such
         if (remainingTime <= 0 && lose == false)
@@ -837,6 +774,7 @@ public class SpellsLogic : MonoBehaviour
     //resets the game after
     public void Restart()
     {
+        score = -1;
         remainingTime = 15;
         rollSpell();
         endsMenu.SetActive(false);
