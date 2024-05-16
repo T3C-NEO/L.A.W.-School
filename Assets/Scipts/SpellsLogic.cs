@@ -93,6 +93,7 @@ public class SpellsLogic : MonoBehaviour
         foursixPos.Add(new Vector2(4.5f, 0));
         foursixPos.Add(new Vector2(7.5f, 0));
 
+        //assmeble the arrows
         arrows.Add(arrow0);
         arrows.Add(arrow1);
         arrows.Add(arrow2);
@@ -146,7 +147,7 @@ public class SpellsLogic : MonoBehaviour
 
 
         
-
+        //bitch lines for the end of the round
         lines.Add("My grandmother could do better!");
         lines.Add("GAAAAAAAAAAAAAARBAGE!");
         lines.Add("What, do you want a medal?");
@@ -351,7 +352,7 @@ public class SpellsLogic : MonoBehaviour
             arrow5.gameObject.tag = "ri";
         }
 
-
+        //special random spell if you select 1 or nothing
         if (spell == "Prestidigitation")
         {
 
@@ -373,7 +374,7 @@ public class SpellsLogic : MonoBehaviour
             arrow4.gameObject.tag = direc[i4];
             arrow5.gameObject.tag = direc[i5];
         }
-
+        //put arrows in order
         for (int j = 0; j < arrows.Count; j++)
             {
                 if (arrows[j].gameObject.tag == "up")
@@ -391,14 +392,13 @@ public class SpellsLogic : MonoBehaviour
                 }
             }
     }
-
+    //detecting button presses
     public void Up(InputAction.CallbackContext context)
     {
         if (lose == false && pause == false)
         {
             if (context.performed)
             {
-                //if (arrows[place].gameObject.transform.rotation == up)
                 if (arrows[place].gameObject.tag == "up")
                 {
                     arrows[place].material = enteredMat;
@@ -470,7 +470,7 @@ public class SpellsLogic : MonoBehaviour
             }
         }
     }
-
+    //POV you messed up
     void whoops()
     {
         place = 0;
@@ -483,7 +483,7 @@ public class SpellsLogic : MonoBehaviour
         arrow4.material = clearMat;
         arrow5.material = clearMat;
     }
-    
+    //toggling spells from menu
     public void OnClicked(Toggle button)
     {
         print(button.name);
@@ -513,11 +513,13 @@ public class SpellsLogic : MonoBehaviour
                 rollSpell();
             }
         }
+        //open the pause menu
         if (Input.GetKeyDown("escape"))
         {
             pause = !pause;
             spellsMenu.SetActive(pause);
         }
+        //handles losing the game and such
         if (remainingTime <= 0)
         {
             if (lose == false)
@@ -536,6 +538,7 @@ public class SpellsLogic : MonoBehaviour
             spellName.gameObject.SetActive(false);
         }
     }
+    //resets the game after
     public void Restart()
     {
         remainingTime = 30;
