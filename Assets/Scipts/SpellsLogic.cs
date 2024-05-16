@@ -15,8 +15,8 @@ public class SpellsLogic : MonoBehaviour
     bool pause = false;
 
     //scoring
-    int score = 0;
-    int highScore = 0;
+    int score = -1;
+    int highScore = -1;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
 
@@ -56,6 +56,49 @@ public class SpellsLogic : MonoBehaviour
 
     //audio for when you're wrong
     public AudioSource wrong;
+
+    public List<AudioClip> audioList = new List<AudioClip>();
+    public AudioClip sound0;
+    public AudioClip sound1;
+    public AudioClip sound2;
+    public AudioClip sound4;
+    public AudioClip sound5;
+    public AudioClip sound6;
+    public AudioClip sound7;
+    public AudioClip sound8;
+    public AudioClip sound9;
+    public AudioClip sound10;
+    public AudioClip sound11;
+    public AudioClip sound12;
+    public AudioClip sound13;
+    public AudioClip sound14;
+    public AudioClip sound15;
+    public AudioClip sound16;
+    public AudioClip sound17;
+    public AudioClip sound18;
+    public AudioClip sound19;
+    public AudioClip sound20;
+    public AudioClip sound21;
+    public AudioClip sound22;
+    public AudioClip sound23;
+    public AudioClip sound24;
+    public AudioClip sound25;
+    public AudioClip sound26;
+    public AudioClip sound27;
+    public AudioClip sound28;
+    public AudioClip sound29;
+    public AudioClip sound30;
+    public AudioClip sound31;
+    public AudioClip sound32;
+    public AudioClip sound33;
+    public AudioClip sound34;
+    public AudioClip sound35;
+    public AudioClip sound36;
+    public AudioClip sound37;
+    public AudioClip sound38;
+    public AudioClip sound39;
+    public AudioClip sound40;
+    public AudioClip end;
 
     //materials for the arrows
     Color entered = new Color(0.4f, 0.9f, 0, 1);
@@ -145,11 +188,53 @@ public class SpellsLogic : MonoBehaviour
         spellList.Add("Hellbomb");
 
 
-
+        //adding audio
+        audioList.Add(sound0);
+        audioList.Add(sound1);
+        audioList.Add(sound2);
+        audioList.Add(sound4);
+        audioList.Add(sound5);
+        audioList.Add(sound6);
+        audioList.Add(sound7);
+        audioList.Add(sound8);
+        audioList.Add(sound9);
+        audioList.Add(sound10);
+        audioList.Add(sound11);
+        audioList.Add(sound12);
+        audioList.Add(sound13);
+        audioList.Add(sound14);
+        audioList.Add(sound15);
+        audioList.Add(sound16);
+        audioList.Add(sound17);
+        audioList.Add(sound18);
+        audioList.Add(sound19);
+        audioList.Add(sound20);
+        audioList.Add(sound21);
+        audioList.Add(sound22);
+        audioList.Add(sound23);
+        audioList.Add(sound24);
+        audioList.Add(sound25);
+        audioList.Add(sound26);
+        audioList.Add(sound27);
+        audioList.Add(sound28);
+        audioList.Add(sound29);
+        audioList.Add(sound30);
+        audioList.Add(sound31);
+        audioList.Add(sound32);
+        audioList.Add(sound33);
+        audioList.Add(sound34);
+        audioList.Add(sound35);
+        audioList.Add(sound36);
+        audioList.Add(sound37);
+        audioList.Add(sound38);
+        audioList.Add(sound39);
+        audioList.Add(sound40);
         
         //bitch lines for the end of the round
         lines.Add("My grandmother could do better!");
         lines.Add("GAAAAAAAAAAAAAARBAGE!");
+        lines.Add("Press esc to turn off the hard spells.");
+        lines.Add("Press esc to turn off the hard spells.");
         lines.Add("What, do you want a medal?");
         lines.Add("Passable.");
         lines.Add("Objection!");
@@ -278,7 +363,7 @@ public class SpellsLogic : MonoBehaviour
         }
         if (spell == "Charm")
         {
-            arrow0.gameObject.tag = "do";
+            arrow0.gameObject.tag = "up";
             arrow1.gameObject.tag = "ri";
             arrow2.gameObject.tag = "ri";
         }
@@ -351,6 +436,216 @@ public class SpellsLogic : MonoBehaviour
             arrow4.gameObject.tag = "le";
             arrow5.gameObject.tag = "ri";
         }
+
+        //fey spells
+        if (spell == "Twenty Six")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "do";
+            arrow2.gameObject.tag = "do";
+        }
+        if (spell == "Drac Flow")
+        {
+            arrow0.gameObject.tag = "ri";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "le";
+        }
+        if (spell == "Sigma")
+        {
+            arrow0.gameObject.tag = "le";
+            arrow1.gameObject.tag = "do";
+            arrow2.gameObject.tag = "ri";
+        }
+        if (spell == "Once Asking")
+        {
+            arrow0.gameObject.tag = "ri";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "le";
+            arrow3.gameObject.tag = "le";
+        }
+        if (spell == "Wojeks")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "ri";
+            arrow3.gameObject.tag = "do";
+        }
+        if (spell == "Crease Jorn")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "ri";
+            arrow4.gameObject.tag = "do";
+        }
+        if (spell == "Jinner")
+        {
+            arrow0.gameObject.tag = "up";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "le";
+            arrow4.gameObject.tag = "up";
+        }
+        if (spell == "Skibidi")
+        {
+            arrow0.gameObject.tag = "le";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "up";
+            arrow4.gameObject.tag = "ri";
+        }
+        if (spell == "Dead Heavy")
+        {
+            arrow0.gameObject.tag = "le";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "le";
+            arrow4.gameObject.tag = "ri";
+        }
+        if (spell == "Weatherboy")
+        {
+            arrow0.gameObject.tag = "le";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "le";
+            arrow3.gameObject.tag = "ri";
+            arrow4.gameObject.tag = "le";
+            arrow5.gameObject.tag = "ri";
+        }
+        if (spell == "Bad Luck")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "do";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "up";
+            arrow4.gameObject.tag = "do";
+            arrow5.gameObject.tag = "do";
+        }
+        if (spell == "Yassification")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "do";
+            arrow2.gameObject.tag = "ri";
+            arrow3.gameObject.tag = "le";
+            arrow4.gameObject.tag = "do";
+            arrow5.gameObject.tag = "do";
+        }
+        if (spell == "Walkin'")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "do";
+            arrow3.gameObject.tag = "do";
+            arrow4.gameObject.tag = "ri";
+            arrow5.gameObject.tag = "do";
+        }
+
+        //hell spells
+        if (spell == "Antiperson")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "ri";
+        }
+        if (spell == "Helltower")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "ri";
+            arrow3.gameObject.tag = "ri";
+        }
+        if (spell == "Raven Wings")
+        {
+            arrow0.gameObject.tag = "up";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "do";
+            arrow3.gameObject.tag = "ri";
+        }
+        if (spell == "Trash Blast")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "do";
+            arrow2.gameObject.tag = "le";
+            arrow3.gameObject.tag = "up";
+            arrow4.gameObject.tag = "ri";
+        }
+        if (spell == "Starbeam")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "le";
+            arrow2.gameObject.tag = "do";
+            arrow3.gameObject.tag = "up";
+            arrow4.gameObject.tag = "le";
+        }
+        if (spell == "Enforce")
+        {
+            arrow0.gameObject.tag = "up";
+            arrow1.gameObject.tag = "do";
+            arrow2.gameObject.tag = "ri";
+            arrow3.gameObject.tag = "le";
+            arrow4.gameObject.tag = "up";
+        }
+        if (spell == "Raven's Call")
+        {
+            arrow0.gameObject.tag = "up";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "le";
+            arrow3.gameObject.tag = "up";
+            arrow4.gameObject.tag = "ri";
+        }
+        if (spell == "Raven Bomb")
+        {
+            arrow0.gameObject.tag = "up";
+            arrow1.gameObject.tag = "ri";
+            arrow2.gameObject.tag = "do";
+            arrow3.gameObject.tag = "do";
+            arrow4.gameObject.tag = "do";
+        }
+        if (spell == "Dawn Fire")
+        {
+            arrow0.gameObject.tag = "ri";
+            arrow1.gameObject.tag = "do";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "ri";
+            arrow4.gameObject.tag = "do";
+        }
+        if (spell == "Fire Barrier")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "le";
+            arrow3.gameObject.tag = "ri";
+            arrow4.gameObject.tag = "le";
+            arrow5.gameObject.tag = "ri";
+        }
+        if (spell == "Hellhound")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "le";
+            arrow3.gameObject.tag = "up";
+            arrow4.gameObject.tag = "ri";
+            arrow5.gameObject.tag = "ri";
+        }
+        if (spell == "Pain Rain")
+        {
+            arrow0.gameObject.tag = "ri";
+            arrow1.gameObject.tag = "do";
+            arrow2.gameObject.tag = "up";
+            arrow3.gameObject.tag = "do";
+            arrow4.gameObject.tag = "le";
+            arrow5.gameObject.tag = "do";
+        }
+        if (spell == "Hellbomb")
+        {
+            arrow0.gameObject.tag = "do";
+            arrow1.gameObject.tag = "up";
+            arrow2.gameObject.tag = "le";
+            arrow3.gameObject.tag = "do";
+            arrow4.gameObject.tag = "up";
+            arrow5.gameObject.tag = "ri";
+        }
+
 
         //special random spell if you select 1 or nothing
         if (spell == "Prestidigitation")
@@ -474,8 +769,12 @@ public class SpellsLogic : MonoBehaviour
     void whoops()
     {
         place = 0;
-        wrong.Play(0);
-        Debug.Log("bad");
+        if (!wrong.isPlaying)
+        {
+            int i = Random.Range(0, audioList.Count);
+            wrong.clip = audioList[i];
+            wrong.Play();
+        }
         arrow0.material = clearMat;
         arrow1.material = clearMat;
         arrow2.material = clearMat;
@@ -483,6 +782,7 @@ public class SpellsLogic : MonoBehaviour
         arrow4.material = clearMat;
         arrow5.material = clearMat;
     }
+
     //toggling spells from menu
     public void OnClicked(Toggle button)
     {
@@ -508,26 +808,21 @@ public class SpellsLogic : MonoBehaviour
             {
                 rollSpell();
             }
-            if (Input.GetKeyDown("space"))
-            {
-                rollSpell();
-            }
         }
         //open the pause menu
-        if (Input.GetKeyDown("escape"))
+        if (Input.GetKeyDown("escape") || Input.GetKeyDown("space"))
         {
             pause = !pause;
             spellsMenu.SetActive(pause);
         }
         //handles losing the game and such
-        if (remainingTime <= 0)
+        if (remainingTime <= 0 && lose == false)
         {
-            if (lose == false)
-            {
-                int i = Random.Range(0, lines.Count);
-                linesText.text = lines[i] + " -Professor Ex-Lawyer";
-            }
-            lose = true;
+            int i = Random.Range(0, lines.Count);
+            linesText.text = lines[i] + " -Professor Ex-Lawyer";
+            wrong.clip = end;
+            wrong.Play();
+            
             if (score > highScore)
             {
                 highScore = score;
@@ -536,12 +831,13 @@ public class SpellsLogic : MonoBehaviour
             scoreText.text = "Score: " + score;
             endsMenu.SetActive(true);
             spellName.gameObject.SetActive(false);
+            lose = true;
         }
     }
     //resets the game after
     public void Restart()
     {
-        remainingTime = 30;
+        remainingTime = 15;
         rollSpell();
         endsMenu.SetActive(false);
         spellName.gameObject.SetActive(true);
