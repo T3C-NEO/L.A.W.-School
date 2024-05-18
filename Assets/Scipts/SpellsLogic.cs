@@ -348,7 +348,7 @@ public class SpellsLogic : MonoBehaviour
             arrow2.gameObject.tag = "up";
             arrow3.gameObject.tag = "up";
             arrow4.gameObject.tag = "up";
-            arrow4.gameObject.tag = "ri";
+            arrow5.gameObject.tag = "ri";
         }
         if (spell == "Fireball")
         {
